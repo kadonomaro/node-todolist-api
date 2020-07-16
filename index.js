@@ -11,10 +11,14 @@ const DB_URI = `mongodb+srv://admin:${process.env.DB_PASSWORD}@node.ujzh6.gcp.mo
 const app = express()
 const router = Router()
 
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 router
     .get('/api/items', getItems)
     .get('/api/item/:id', getItem)
-    .post('/api/items', bodyParser.json(), createItem)
+    .post('/api/items', createItem)
 
 app.use(router)
 
