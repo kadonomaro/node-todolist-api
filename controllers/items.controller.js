@@ -18,6 +18,16 @@ const createItem = async (req, res) => {
     res.json({ item })
 }
 
+const updateItem = async (req, res) => {
+    Item.findByIdAndUpdate(req.params.id, req.body, (err, doc) => {
+        if (err) {
+            res.json({ err })
+        } else {
+            res.json({ item: doc })
+        }
+    })
+}
+
 const deleteItem = async (req, res) => {
     Item.findByIdAndRemove(req.params.id, (err, doc) => {
         if (err) {
@@ -32,5 +42,6 @@ module.exports = {
     getItems,
     getItem,
     createItem,
+    updateItem,
     deleteItem
 }
