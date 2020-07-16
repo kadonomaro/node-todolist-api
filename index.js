@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 require('dotenv').config()
@@ -14,6 +15,9 @@ const router = Router()
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({
+    origin: ['https://todo-list-2020-6c5c0.firebaseapp.com/', 'http://127.0.0.1:5500/']
+}))
 
 router
     .get('/api/items', getItems)
@@ -40,3 +44,4 @@ async function start() {
 }
 
 start()
+console.log(process.env.DB_PASSWORD);
