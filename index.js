@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 require('dotenv').config()
 const { Router } = require('express')
-const { getItems, getItem, createItem } = require('./controllers/items.controller')
+const { getItems, getItem, createItem, deleteItem } = require('./controllers/items.controller')
 
 const PORT = process.env.PORT || 3000
 const DB_URI = `mongodb+srv://admin:${process.env.DB_PASSWORD}@node.ujzh6.gcp.mongodb.net/todos_db`
@@ -17,8 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 router
     .get('/api/items', getItems)
-    .get('/api/item/:id', getItem)
+    .get('/api/items/:id', getItem)
     .post('/api/items', createItem)
+    .delete('/api/items/:id', deleteItem)
 
 app.use(router)
 
