@@ -19,7 +19,7 @@ const createItem = async (req, res) => {
 }
 
 const updateItem = async (req, res) => {
-    Item.findByIdAndUpdate(req.params.id, req.body, (err, doc) => {
+    await Item.findByIdAndUpdate(req.params.id, req.body, (err, doc) => {
         if (err) {
             res.json({ err })
         } else {
@@ -29,7 +29,7 @@ const updateItem = async (req, res) => {
 }
 
 const deleteItem = async (req, res) => {
-    Item.findByIdAndRemove(req.params.id, (err, doc) => {
+    await Item.findByIdAndRemove(req.params.id, (err, doc) => {
         if (err) {
             res.json({ err })
         } else {
@@ -38,10 +38,19 @@ const deleteItem = async (req, res) => {
     })
 }
 
+const deleteAll = async (req, res) => {
+    const items = await Item.find()
+    const ids = items.map(item => _id = item.id)
+    const response = await Item.deleteMany({ _id: ids })
+    res.json({ deleteCount: response.deletedCount })
+    
+}
+
 module.exports = {
     getItems,
     getItem,
     createItem,
     updateItem,
-    deleteItem
+    deleteItem,
+    deleteAll
 }

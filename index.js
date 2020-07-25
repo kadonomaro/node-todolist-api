@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 require('dotenv').config()
 const { Router } = require('express')
-const { getItems, getItem, createItem, deleteItem, updateItem } = require('./controllers/items.controller')
+const { getItems,getItem, createItem, deleteItem, updateItem, deleteAll } = require('./controllers/items.controller')
 
 const PORT = process.env.PORT || 3000
 const DB_URI = `mongodb+srv://admin:${process.env.DB_PASSWORD}@node.ujzh6.gcp.mongodb.net/todos_db`
@@ -14,10 +14,8 @@ const router = Router()
 
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({
-    origin: ['https://todo-list-2020-6c5c0.firebaseapp.com/', 'http://127.0.0.1:5500/']
-}))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(cors())
 
 router
     .get('/api/items', getItems)
@@ -25,6 +23,7 @@ router
     .post('/api/items', createItem)
     .put('/api/items/:id', updateItem)
     .delete('/api/items/:id', deleteItem)
+    .delete('/api/items/', deleteAll)
 
 app.use(router)
 
@@ -39,9 +38,8 @@ async function start() {
             console.log('Server has been started on port: ', PORT)
         })
     } catch (error) {
-        console.error(error);
+        console.error(error)
     }
 }
 
 start()
-console.log(process.env.DB_PASSWORD);

@@ -9,6 +9,11 @@ const itemSchema = new Schema({
         type: Boolean,
         required: false,
         default: false
+    },
+    createdAt: {
+        type: Date,
+        required: false,
+        default: Date.now()
     }
 }, {
     collection: 'todos_collection',
